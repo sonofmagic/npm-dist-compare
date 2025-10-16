@@ -1,26 +1,23 @@
 # Repository Guidelines
 
+Use this guide to get productive quickly in the `npm-dist-compare` monorepo. Follow the conventions below to keep tooling, builds, and reviews predictable for everyone.
+
 ## Project Structure & Module Organization
 
-This pnpm + Turbo monorepo keeps deployable surfaces under `apps/` (`cli`, `client`, `server`, `website`) and reusable templates under `packages/` (e.g., `monorepo`, `vue-lib-template`). Shared TypeScript and build settings live in root configs such as `turbo.json`, `tsconfig.json`, and `eslint.config.js`. Tests sit alongside their targets in `test/*.test.ts`, and each app owns its public assets (`public/`, `worker/`) to keep deployments self-contained.
+Deployable apps live under `apps/` (e.g., `cli`, `client`, `server`, `website`), while reusable templates sit in `packages/` such as `monorepo` and `vue-lib-template`. Shared configuration is centralized in root files like `turbo.json`, `tsconfig.json`, and `eslint.config.js`. Tests colocate beside source in `test/*.test.ts`, and each app owns its own `public/` or `worker/` assets to keep releases self-contained.
 
 ## Build, Test, and Development Commands
 
-- `pnpm install` — set up workspaces; ensure Node 20+ as defined in `package.json`.
-- `pnpm dev` — run `turbo run dev --parallel` for all apps that expose a `dev` script.
-- `pnpm build` — execute `turbo run build` to build every workspace with caching.
-- `pnpm test` / `pnpm test:dev` — run Vitest suites once or in watch mode across packages.
-- `pnpm lint` — invoke `turbo run lint` to apply ESLint/Stylelint policies repo-wide.
-- `pnpm script:sync` & `pnpm script:clean` — use the monorepo helper to align dependency versions or clear generated artifacts.
+Run `pnpm install` (Node 20+) once to hydrate the workspaces. Use `pnpm dev` to launch `turbo run dev --parallel` across all apps that expose a `dev` target. `pnpm build` triggers `turbo run build`, benefiting from the shared cache. Run fast feedback suites with `pnpm test` or watch mode via `pnpm test:dev`. Execute `pnpm lint` before commits, and reach for `pnpm script:sync` or `pnpm script:clean` to align dependency versions or purge generated artifacts.
 
 ## Coding Style & Naming Conventions
 
-Follow the root `.editorconfig`: two-space indentation, LF line endings, UTF-8. Prefer TypeScript (`.ts`/`.tsx`) and Vue SFCs; name files with kebab-case (`user-table.vue`) and exported symbols with PascalCase for components or camelCase for utilities. ESLint (`@icebreakers/eslint-config`) and Stylelint enforce formatting; run `pnpm lint` before committing, and rely on Husky + lint-staged to auto-fix staged files via `eslint --fix`.
+The repository follows the root `.editorconfig`: UTF-8, LF endings, and two-space indentation. Prefer TypeScript (`.ts`, `.tsx`) and Vue SFCs. Name files in kebab-case (`user-table.vue`), default to PascalCase for components, and camelCase for utilities. Husky with lint-staged enforces formatting through `eslint --fix` using `@icebreakers/eslint-config`, so keep imports ordered and unused code trimmed.
 
 ## Testing Guidelines
 
-Vitest powers unit tests located in `test/*.test.ts`. Mirror existing naming by matching the unit under test (`monorepo` utilities map to `packages/monorepo/test/*.test.ts`). Aim for meaningful assertions rather than snapshot defaults, and add coverage checks with `pnpm test -- --coverage`, which writes reports to `coverage/`. When introducing new public APIs, include integration-style tests in the relevant app workspace.
+Vitest drives unit tests; add suites next to their targets in `test/*.test.ts`. Craft assertions that exercise behavior rather than snapshots. Run `pnpm test -- --coverage` to generate `coverage/` reports, and ensure new public APIs ship with integration-style tests in the owning app.
 
 ## Commit & Pull Request Guidelines
 
-Commits must conform to Conventional Commit syntax; recent history uses prefixes like `feat`, `fix`, and `chore`. Example: `feat(server): add auth router`. Use `pnpm commit` (commitlint prompt) or ensure your manual message passes `pnpm commitlint --edit`. Before opening a PR, make sure `pnpm lint` and `pnpm test` succeed, link related issues, and provide screenshots or logs for user-facing changes. Touching publishable packages requires a changeset (`pnpm changeset`) so releases stay traceable.
+Write Conventional Commits mirroring existing history (e.g., `feat(server): add auth router`). Use `pnpm commit` for the guided prompt or ensure `pnpm commitlint --edit` passes. Before opening a PR, verify `pnpm lint` and `pnpm test` are green, link related issues, and include screenshots or logs for user-facing changes. Touching publishable packages requires a `pnpm changeset` entry so releases stay traceable.
