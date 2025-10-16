@@ -1,0 +1,29 @@
+"use strict";
+const _pluginVue2_normalizer = require("./_plugin-vue2_normalizer-CLZGzUhB.cjs");
+const _sfc_main = {
+  name: "ElHeader",
+  componentName: "ElHeader",
+  props: {
+    height: {
+      type: String,
+      default: "60px"
+    }
+  }
+};
+var _sfc_render = function render() {
+  var _vm = this, _c = _vm._self._c;
+  return _c("header", { staticClass: "el-header", style: { height: _vm.height } }, [_vm._t("default")], 2);
+};
+var _sfc_staticRenderFns = [];
+var __component__ = /* @__PURE__ */ _pluginVue2_normalizer.normalizeComponent(
+  _sfc_main,
+  _sfc_render,
+  _sfc_staticRenderFns,
+  false
+);
+const Header = __component__.exports;
+const _Header = Header;
+_Header.install = function install(Vue) {
+  Vue.component(_Header.name, _Header);
+};
+module.exports = _Header;

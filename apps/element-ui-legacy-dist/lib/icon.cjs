@@ -1,0 +1,24 @@
+"use strict";
+const _pluginVue2_normalizer = require("./_plugin-vue2_normalizer-CLZGzUhB.cjs");
+const _sfc_main = {
+  name: "ElIcon",
+  props: {
+    name: String
+  }
+};
+var _sfc_render = function render() {
+  var _vm = this, _c = _vm._self._c;
+  return _c("i", { class: "el-icon-" + _vm.name });
+};
+var _sfc_staticRenderFns = [];
+var __component__ = /* @__PURE__ */ _pluginVue2_normalizer.normalizeComponent(
+  _sfc_main,
+  _sfc_render,
+  _sfc_staticRenderFns,
+  false
+);
+const ElIcon = __component__.exports;
+ElIcon.install = function(Vue) {
+  Vue.component(ElIcon.name, ElIcon);
+};
+module.exports = ElIcon;
