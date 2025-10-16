@@ -204,7 +204,7 @@ if (typeof window !== "undefined" && window.Vue) {
   install(window.Vue);
 }
 const index = {
-  version: "0.0.1",
+  version: "0.0.2",
   locale: locale.use,
   i18n: locale.i18n,
   install,
